@@ -1,5 +1,6 @@
 import graphene
 from quiz.models import Quiz, Category, Question, Answer
+from quiz.mutations import CategoryMutation
 from quiz.types import QuizType, QuestionType, AnswerType, CategoryType
 
 
@@ -22,4 +23,9 @@ class Query(graphene.ObjectType):
         return Answer.objects.filter(question__id=question_id)
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+
+    update_category = CategoryMutation.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
